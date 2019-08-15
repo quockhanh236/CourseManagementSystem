@@ -1,0 +1,53 @@
+﻿@using CourseManagementSystem.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Account management";
+
+    if (HttpContext.Current.User.IsInRole("student"))
+    {
+        ViewBag.Role = "Student";
+    }
+    else if (HttpContext.Current.User.IsInRole("teacher"))
+    {
+        ViewBag.Role = "The teacher";
+    }
+    else if (HttpContext.Current.User.IsInRole("admin"))
+    {
+        ViewBag.Role = "Admin";
+    }
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p>You are logged in as<strong>@User.Identity.GetUserName()</strong>.     You are
+    <strong>
+        @ViewBag.Role
+    </strong>
+    in our system.</p><br />
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_ChangeUserDataPartial")
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.HasLocalPassword)
+        {
+            @Html.Partial("_ChangePasswordPartial")
+        }
+        else
+        {
+            @Html.Partial("_SetPasswordPartial")
+        }
+
+        <section id="externalLogins">
+            @Html.Action("RemoveAccountList")
+            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

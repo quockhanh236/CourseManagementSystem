@@ -1,0 +1,72 @@
+﻿@model CourseManagementSystem.Models.Question
+@Scripts.Render("~/scripts/CreateTest/Engine.js")
+@Styles.Render("~/Content/CreateTest/Style.css")
+
+@{
+    ViewBag.Title = "Create";
+ }
+
+@if (User.IsInRole("teacher") && ViewBag.Teacher)
+{
+<h2>Enter a question and answer options</h2>
+
+    <div>
+        <select id="typeSel" onchange="changeButtons()" class="control-label col-md-2">
+            <option>One answer option</option>
+            <option>Multiple Answer Options</option>
+        </select>
+    </div><br />
+    <form action="/Questions/Create" method="post" class="test">
+        <div>
+            <div>
+                <hr />
+                <h4>Choose a question difficulty</h4>
+
+                1 <input type="radio" name="impSel" value="1" checked="checked" />
+                2 <input type="radio" name="impSel" value="2" />
+                3 <input type="radio" name="impSel" value="3" />
+                <hr />
+            </div>
+            <div class="p">
+                @Html.Label("Question text", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextArea("Text", htmlAttributes: new { @class = "txtareasq" })
+            </div>
+
+            <div class="p">
+                @Html.Label("Answer 1", htmlAttributes: new { @class = "control-label col-md-2" })
+                <input type="radio" id="answer" name="answers" checked="checked" value="0" />
+                @Html.TextArea("names", htmlAttributes: new { @class = "txtareas" })
+            </div>
+
+            <div class="p">
+                @Html.Label("Answer 2", htmlAttributes: new { @class = "control-label col-md-2" })
+                <input type="radio" id="answer" name="answers" value="1" />
+                @Html.TextArea("names", htmlAttributes: new { @class = "txtareas" })
+            </div>
+
+            <div class="p">
+                @Html.Label("Answer 3", htmlAttributes: new { @class = "control-label col-md-2" })
+                <input type="radio" id="answer" name="answers" value="2" />
+                @Html.TextArea("names", htmlAttributes: new { @class = "txtareas" })
+            </div>
+
+            <div class="p">
+                @Html.Label("Answer 4", htmlAttributes: new { @class = "control-label col-md-2" })
+                <input type="radio" id="answer" name="answers" value="3" />
+                @Html.TextArea("names", htmlAttributes: new { @class = "txtareas" })
+            </div>
+
+            <div>
+                <div>
+                    <input class="btn btn-default control-label col-md-2 " type="submit" value="Create" />
+                </div>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <h3>
+        @Html.Label("No access to this page.")
+    </h3>
+}

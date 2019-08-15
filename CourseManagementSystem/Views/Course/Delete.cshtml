@@ -1,0 +1,46 @@
+﻿@model CourseManagementSystem.Models.Course
+
+@{
+    ViewBag.Title = "Delete";
+}
+@if (User.IsInRole("teacher") && ViewBag.Teacher) {
+<h2>Delete course</h2>
+
+<h3>Are you sure you want to delete the course?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PublishDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PublishDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Return", "Teacher")
+        </div>
+    }
+</div>
+}
+else
+{
+    <h3>
+        @Html.Label("No access to this page.")
+    </h3>
+}

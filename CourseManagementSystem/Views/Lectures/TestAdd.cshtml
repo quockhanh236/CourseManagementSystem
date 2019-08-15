@@ -1,0 +1,7 @@
+﻿@model CourseManagementSystem.Models.Course
+@{
+    ViewBag.Title = "TestAdd";
+}
+
+<h2>TestAdd</h2>
+@Html.ActionLink("Add test", "CreateTest", "Tests", new { id = Model.id }, null)

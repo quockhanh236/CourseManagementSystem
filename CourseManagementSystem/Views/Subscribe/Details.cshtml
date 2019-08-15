@@ -1,0 +1,91 @@
+﻿@using CourseManagementSystem.Migrations
+@using CourseManagementSystem.Models
+@model List<CourseManagementSystem.Models.Lecture>
+
+
+@{
+    ViewBag.Title = "Details";
+    List<CourseManagementSystem.Models.Lecture>
+    subscription = ViewBag.Sunscription;
+    var db = new ApplicationDbContext();
+    bool isFinal = ViewBag.IsFinal;
+
+}
+
+@*<div class="col-md-4 " style="border-right:1px solid #eeeeee">*@
+<h2>Lectures</h2>
+
+
+
+@*<span style="padding:0px 5px;">Название</span><span style="padding:0px 700px;">Rating</span>*@
+
+@if (Model.Count() > 0) {
+<table class="table">
+    @*<div style="padding-top:10px">*@
+
+    @foreach (var item in Model)
+    {
+        bool isEmpty = false;
+        bool isPassed = false;
+        bool isRetake = false;
+        var Test = db.Test.Where(t => t.Lecture.Id == item.Id);
+        if (Test.Any())
+        {
+            isEmpty = true;
+            if (db.Mark.FirstOrDefault(m => m.Test.Id == Test.FirstOrDefault().Id) != null && db.Mark.FirstOrDefault(m => m.Test.Id == Test.FirstOrDefault().Id).Value >= 60)
+            {
+                isPassed = true;
+            }
+            else if (db.Mark.FirstOrDefault(m => m.Test.Id == Test.FirstOrDefault().Id) != null && db.Mark.FirstOrDefault(m => m.Test.Id == Test.FirstOrDefault().Id).Value < 60)
+            {
+                isRetake = true;
+            }
+        }
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <div style="float:right">
+                    @if (isEmpty)
+                    {
+                        if (isPassed)
+                        {
+                            <text>Passed</text>
+
+    }
+    else if (isRetake)
+    {
+                            @Html.ActionLink("Retake test", "Retake", "Testing", new { lectId = item.Id }, null)
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Take the test", "Question", "Testing", new { lectId = item.Id }, null)
+                        }
+                    }
+                    <text>|</text>
+                    @Html.ActionLink("View", "View","Lectures", new { id = item.Id },null)
+                </div>
+            </td>
+        </tr>
+    }
+    @if (isFinal)
+    {
+        @Html.ActionLink("Get a certificate", "Certificate", "Subscribe", new { courseId = ViewBag.CourseId }, null)
+    }
+
+    @*</div>*@
+</table>
+}
+else
+{
+    <hr />
+    <p style="color:#808080; text-align:center">
+        There are no lectures yet</p>
+}
+
+@*</div>*@
+

@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Test list";
+    List<CourseManagementSystem.Models.Lecture> lects = ViewBag.Lectures;
+    int courseId = ViewBag.CourseId;
+    int testId = 0;
+    int counter = 0;
+}
+
+@model IEnumerable<CourseManagementSystem.Models.Test>
+
+<h2>Tests</h2>
+<h5>Test No. / Lecture Name</h5>
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        @foreach (var item in lects)
+        {
+            foreach (var i in Model)
+            {
+                if (i.Lecture == item)
+                {
+                    testId = i.Id;
+                }
+            }
+            <tr>
+
+
+                <td>
+                    @{counter++;}
+                    @counter
+                    @Html.DisplayFor(modelItem => item.Name)
+
+                </td>
+                <td>
+                    @Html.ActionLink("More details", "QuestionsList", new { lectId = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = testId, courseId = courseId })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <hr />
+    <p style="color:#808080; text-align:left">
+        There are no tests yet.
+    </p>
+}

@@ -1,0 +1,56 @@
+﻿@model List<CourseManagementSystem.Models.Mark>
+
+
+@{
+    ViewBag.Title = "Details";
+    List<CourseManagementSystem.Models.Lecture>
+
+        lectures = ViewBag.Lectures;
+
+    int counter = 0;
+}
+
+@*<div class="col-md-4 " style="border-right:1px solid #eeeeee">*@
+<h2>О курсе</h2>
+
+
+
+<span style="padding:0px 5px;">Title</span><span style="padding:0px 700px;">Rating</span>
+
+
+
+
+
+
+<table class="table">
+    @*<div style="padding-top:10px">*@
+
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Test.Lecture.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            @{
+        counter++;
+            }
+        </tr>
+
+
+
+
+    }
+
+    @*</div>*@
+</table>
+<p>
+    @Html.ActionLink("Back to list", "Student")
+</p>
+
+@*</div>*@
+

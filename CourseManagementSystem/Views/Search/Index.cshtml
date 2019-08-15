@@ -1,0 +1,56 @@
+﻿@model List<CourseManagementSystem.Models.ApplicationUser>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .content {
+        
+    }
+</style>
+<div style="position:absolute;width:70%;left:0;right:0;margin: 20px auto">
+    <div class="content">
+        <form class="input-group" method="get" action="/Search">
+        
+            <input name="search" type="text" style="max-width:none;" class="form-control">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="submit">To Find!</button>
+            </span>
+        </form><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+    @if (Model != null) { 
+    if(Model.Count > 0){
+    <div style="margin-top:60px;" class="panel panel-primary content">
+        <div style="text-align:center" class="panel-heading">Results</div>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>LastName</th>
+                <th>Role</th>
+            </tr>
+            
+            @foreach(var user in Model)
+            {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>
+                 @foreach (var item in user.Roles)
+                 {
+                     @item.RoleId 
+                     
+                 }
+                
+                </td>
+                <td><a href="/Account/Usr?profile=@user.UserName">Go to profile</a></td>
+            </tr>
+            }
+
+        </table>
+    </div>
+    }
+    else
+    {
+        <h1 style="text-align:center;">Not found</h1>
+    }
+    }
+</div>

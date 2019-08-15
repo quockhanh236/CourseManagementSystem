@@ -1,0 +1,29 @@
+.test{
+text-align: center;
+}
+
+.p{
+  margin-top: 20px;
+}
+
+.txtareas{
+    width: 400px;
+    height: 50px;
+    resize:none;
+}
+
+.txtareasq{
+    width: 400px;
+    height: 50px;
+    resize:none;
+    margin-left: 20px;
+}
+
+.selectSt{
+    margin-left: 10px;
+
+}
+
+.accbut {
+    float:left;
+}

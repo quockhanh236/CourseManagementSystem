@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Question";
+    IEnumerable<CourseManagementSystem.Models.Question> questions = ViewBag.Questions;
+    //List<CourseManagementSystem.Models.Answer> answers = ViewBag.Answers;
+    //List<CourseManagementSystem.Models.Answer> answers = ViewBag.AnswersToList;
+    int answersCount = 4;
+    int currQuest = 0;
+    //int lecture = ViewBag.TestId;
+    //int istrue = ViewBag.IsCheckBox;
+
+
+}
+
+<script src="/Scripts/testing.js"></script>
+<h2>Testing</h2>
+@using System.Diagnostics.Eventing.Reader
+@using System.Text.RegularExpressions
+@using System.Web.UI.WebControls
+@model IEnumerable<CourseManagementSystem.Models.Test>
+
+
+
+<form action="/Testing/Question" method="post" class="test">
+
+    <table class="table">
+        <tr>
+
+            <td>
+                <h4>Question text</h4>
+            </td>
+            <td>
+                <h4>Answer options</h4>
+            </td>
+        </tr>
+    </table>
+    @if (questions.Count() > 0)
+    {
+        <table class="table">
+
+            @foreach (var item in questions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Text)
+                    </td>
+                    <td>
+                        @if (item.Answer.Count(a => a.IsTrue) == 1)
+                        {
+
+                            int i = 0;
+                            foreach (var itemAnswers in item.Answer)
+                            {
+                                <span>@itemAnswers.Text</span>
+
+                                <input type="radio" id="@itemAnswers.QuestionId" name="@itemAnswers.QuestionId" value="@itemAnswers.Id"  />
+
+
+                                @*@Html.RadioButton(@item.QuestionId+"", new{ id = @item.QuestionId + "answer" + i++ })*@
+                            }
+                        }
+                        else
+                        {
+                            int i = 0;
+                            foreach (var itemAnswers in item.Answer)
+                            {
+
+                                <span>@itemAnswers.Text</span>
+                                <input type="checkbox" id="@itemAnswers.QuestionId" name="@itemAnswers.QuestionId" value="@itemAnswers.Id" onclick="andr(@itemAnswers.QuestionId)"  />
+                                @*@Html.CheckBox(@item.QuestionId + "", new { id = @item.QuestionId + "answer" + i++ })*@
+                                //ViewBag.AnswerList.Add(@itemAnswers.Id.ToString());
+                            }
+                        }
+
+                        @*@for (int i = 0; i < answersCount; i++)
+                            {
+                                if (istrue == 1)
+                                {
+
+                                    <input type="radio" id="answer" name="answers" value="@i" />
+                                    @Html.DisplayFor(modelItem => questions[currQuest].Answer.ToList().ElementAt(i).Text)
+                                }
+                                else
+                                {
+                                    <input type="checkbox" id="answer" name="answers" value="@i" />
+                                    @Html.DisplayFor(modelItem => questions[currQuest].Answer.ToList().ElementAt(i).Text)
+                                }
+                            }
+                            @{ currQuest++; }*@
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Complete test" class="btn btn-default" />
+            </div>
+        </div>
+
+    }
+
+
+    else
+    {
+        <hr />
+        <p style="color: #808080; text-align: left">
+            There are no questions yet.
+        </p>
+    }
+
+</form>

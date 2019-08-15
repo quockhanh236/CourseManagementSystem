@@ -1,0 +1,15 @@
+﻿@using CourseManagementSystem.Models
+@model Search
+@{
+    var category = new ApplicationDbContext().Categories;
+    Model.category_id = 0;
+    Model.sort_field = "name";
+}
+@using (Html.BeginForm("Search", "Course", Model, FormMethod.Post))
+{
+    <div class="nav navbar-nav pull-right" style="line-height:normal;background-color: #393939; height: 50px; padding: 12px 0px 0px 15px">
+         @Html.TextBoxFor(model => model.keywords, new { @class = "input-medium search-query", placeholder = "Search" })
+         <input type="submit" value="Find" class="btn-link" />
+        <div><a href="/search" style="font-size:10pt;">User Search</a></div>
+    </div>
+}

@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+    List<CourseManagementSystem.Models.Comment> comments = ViewBag.CommentList;
+    List<CourseManagementSystem.Models.Comment> tComments = ViewBag.TeacherComments;
+    var ui = ViewBag.UserId;
+}
+
+<script type="text/javascript">
+    function toRespond(id) {
+        var el = document.getElementById(id + "toComment");
+        if (el.style.display == "none") {
+            el.style.display = "block";
+            // el.style.height = "150px";
+        } else {
+            el.style.display = "none"
+            // el.style.height = "0px";
+        }
+    }
+</script>
+
+<h3>@Html.Label("Comments: ")</h3>
+@if (comments.Count > 0)
+{
+    foreach (var c in comments)
+    {
+        <br />
+        <div style="width : 60% ; word-wrap: break-word;">
+            <div>@c.user.FirstName @c.user.LastName</div>
+
+            <div style=" border: 1px double black">
+                <b>@c.text</b>
+            </div>
+
+            <div>
+                (
+                @c.date.ToString("HH:mm:ss dd/MM/yyyy")
+                )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div>
+                    @if (ui == c.user.Id || User.IsInRole("admin"))
+                    {
+                        @Html.ActionLink("Delete comment", "DeleteComment", new { commentId = c.id });
+                    }
+                </div>
+
+                @if (User.IsInRole("teacher") && ViewBag.NeededTeacher)
+                {
+                    <b id=@c.id onclick="toRespond(this.id)" style="user-select: none;-moz-user-select: -moz-none;-o-user-select: none;-khtml-user-select: none;-webkit-user-select: none; cursor:pointer">Reply </b>
+                } &nbsp;
+
+            </div>
+        </div>
+        <div id="@c.id.ToString()toComment" style="display:none;margin-left: 50px ">
+            @using (Html.BeginForm("AddTeacherComment", "Course", new { courseId = ViewBag.CourseId, prevComment = c.id }, FormMethod.Post, null))
+            {
+
+                <div>
+                    <div>
+                        @Html.TextArea("commentText", new { style = " resize : none; width : 400px;height  : 80px" })
+                    </div>
+                    <br />
+                    <div>
+                        <input class="btn btn-default control-label col-md-2 " type="submit" value="Submit" />
+                    </div>
+                </div> <br /><br /><br />
+            }
+        </div>
+        <div>
+            @if (tComments.Count > 0)
+            {
+                foreach (var com in tComments)
+                {
+                    if (com.previosComment != null && com.previosComment == c)
+                    {
+                        <br />
+                        <div style="margin-left: 50px ;width : 60% ; word-wrap: break-word;">
+                            @com.user.FirstName @com.user.LastName
+                            <div style=" border: 1px double green">
+                                <b>@com.text</b>
+                            </div>
+                            <div>
+                                (
+                                @com.date.ToString("HH:mm:ss dd/MM/yyyy")
+                                )
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    }
+}
+

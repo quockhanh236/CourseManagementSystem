@@ -1,0 +1,63 @@
+﻿@model CourseManagementSystem.Models.Course
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="col-md-4 " style="border-right:1px solid #eeeeee">
+    <h2>About the course</h2>
+
+    <div style="padding-top:10px">
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PublishDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PublishDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.sertificate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.sertificate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.description)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Add test", "CreateTest", "Tests", new { id = Model.id }, null) |
+        @Html.ActionLink("Back to list", "Teacher") |
+        @Html.ActionLink("List of students studying this course", "Subscribers", new { id = Model.id }) |
+        @Html.ActionLink("List of students completing this course", "Passed", new { id = Model.id }) 
+    </p>
+</div>
+<div class="col-md-8">
+    <p>
+        @Html.Action("EditList", "Lectures", new { courceId = Model.id })
+    </p>
+</div>
+<div class="col-md-9">
+
+    <p>
+        @Html.Action("EditList", "Tests", new { courseId = Model.id })
+    </p>
+</div>
