@@ -3,10 +3,12 @@
 @model IEnumerable<Course>
 
 @{
-    ViewBag.Title = "Courses";
+    ViewBag.Title = "Course Submissions";
 }
-
-<h2>Courses</h2>
+<p>
+    @Html.ActionLink("Create new", "Create")
+</p>
+<h2>Course Submissions</h2>
 
 @if (Model.Count() > 0) { 
 <table class="table">
@@ -60,5 +62,5 @@ else
     
     <hr />
     <p style="color:#808080; text-align:center">
-        You have no courses yet</p>
+        No applications received</p>
 }

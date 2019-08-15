@@ -6,14 +6,14 @@
     ViewBag.Title = "Create a course";
     var category = new ApplicationDbContext().Categories;
 }
-@if (User.IsInRole("teacher"))    {
+@if (User.IsInRole("teacher") || User.IsInRole("admin"))    {
 <h2>Create a course</h2>
+            
+@(Html.BeginForm())
+            {
+                    @Html.AntiForgeryToken()
 
-@(Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+                    <div class="form-horizontal">
         <h4>Enter course information</h4>
         <hr />
         @Html.ValidationSummary(true)
@@ -56,6 +56,7 @@
         </div>
     </div>
 }
+
 
 <div>
     @Html.ActionLink("Back to list", "Teacher")
